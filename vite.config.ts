@@ -12,5 +12,12 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/setup.ts'],
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      lines: 40,
+      functions: 40,
+      branches: 40,
+      statements: 40,
+    },
   },
 });
