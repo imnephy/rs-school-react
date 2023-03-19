@@ -4,7 +4,7 @@ import { Component } from 'react';
 
 export class NotFound extends Component {
   componentDidMount(): void {
-    document.title = `404 | React-store`;
+    document.title = `404 | Online-store`;
   }
   render() {
     return (

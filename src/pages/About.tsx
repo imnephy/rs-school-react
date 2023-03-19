@@ -2,7 +2,7 @@ import React from 'react';
 
 class AboutUs extends React.Component {
   componentDidMount(): void {
-    document.title = `About | React-store`;
+    document.title = `About | Online-store`;
   }
   render(): React.ReactNode {
     return (
