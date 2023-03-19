@@ -31,6 +31,7 @@ class Home extends React.Component<React.PropsWithChildren, HomeState> {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
   componentDidMount(): void {
+    document.title = `Home | React-store`;
     this.fetchProducts();
   }
   async fetchProducts() {
