@@ -1,23 +1,22 @@
-import { Route, Routes } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+import RootLayout from './layouts/RootLayout';
+import { createRoutesFromElements, Route, RouterProvider } from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
+import About from './pages/About';
 import NotFound from './pages/NotFound';
 
-export function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
       <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+    </Route>
+  )
+);
+
+export function App() {
+  return <RouterProvider router={router} />;
 }
 
-export function WrappedApp() {
-  return (
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
-}
-
-export default WrappedApp;
+export default App;
