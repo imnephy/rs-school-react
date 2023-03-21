@@ -1,0 +1,148 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:300,regular,500,700,800,italic);
+// -------zero-style------
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 1em;
+}
+* {
+  font-family: Montserrat;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  margin-left: -40px;
+}
+* {
+  box-sizing: border-box;
+  color: #fff;
+}
+// ------------------------
+:root {
+  --primary: #bc4123;
+  --secondary: #2b3452;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Poppins';
+  background: var(--secondary);
+}
+
+p {
+  margin: 20px 0;
+}
+/* navbar */
+header nav {
+  display: flex;
+  gap: 16px;
+  justify-content: end;
+  align-items: center;
+  max-width: 1366px;
+  margin: 0 auto;
+}
+header nav h1 {
+  margin-right: auto;
+  border-bottom: 3px solid var(--primary);
+}
+header nav a {
+  text-decoration: none;
+  padding: 6px;
+  border-radius: 4px;
+  height: fit-content;
+}
+header nav a.active {
+  background: var(--primary);
+}
+/* about */
+.about p {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 15px;
+}
+/* not-found */
+.not-found {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.not-found a {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.not-found a:hover {
+  background-color: var(--primary);
+}
+.wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+}
+#root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0 1vw;
+}
+
+.products__list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 22vw;
+  gap: 10px;
+  margin: 0 auto;
+}
+.product__item {
+  border: 1px solid black;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.product__item-info {
+  position: absolute;
+  width: 60%;
+  z-index: 2;
+  white-space: break-spaces;
+}
+
+.product__item-info__list {
+  & > li {
+    padding: 0;
+    margin: 0.3em;
+    font-size: 1vw;
+    color: white;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(53, 57, 117);
+    opacity: 0.8;
+    z-index: -1;
+  }
+}
+.product__item-btns {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 10%;
+  position: absolute;
+  bottom: 1vw;
+}
