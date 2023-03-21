@@ -35,7 +35,12 @@ class Search extends React.Component<ISearch, { value: string }> {
       <div className="search">
         <Logo className="search__img" />
         <form onSubmit={this.handleSubmit}>
-          <MyInput placeholder="Search..." value={this.state.value} onChange={this.handleChange} />
+          <MyInput
+            type="text"
+            placeholder="Search..."
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
           <MyButton>Search</MyButton>
         </form>
       </div>

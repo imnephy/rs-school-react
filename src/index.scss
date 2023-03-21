@@ -146,3 +146,54 @@ header nav a.active {
   position: absolute;
   bottom: 1vw;
 }
+
+/* forms */
+
+.form {
+  text-align: center;
+  width: 100%;
+  & > .form-inputs {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    margin: 10px auto;
+    gap: 15px;
+
+    & button {
+      display: block;
+    }
+    & select {
+      background-color: rgba(255, 153, 238, 0.219);
+      border: 3px solid purple;
+      border-radius: 17px;
+      padding: 7px 25px 7px 25px;
+      display: block;
+      & > option {
+        color: black;
+        &:first-child {
+          background-color: grey;
+        }
+      }
+    }
+    & .form-inputs__short {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 20px;
+      & * {
+        width: 50%;
+      }
+    }
+  }
+  & .form-inputs__sex-swither {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+    & input {
+      margin-right: 12px;
+    }
+  }
+}
