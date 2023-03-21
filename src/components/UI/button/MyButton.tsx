@@ -1,12 +1,5 @@
 import cl from './MyButton.module.scss';
 
-// const MyButton = <T,>({ children, ...props }: Props<T>): JSX.Element => {
-//   return (
-//     <button {...props} className={cl.myBtn}>
-//       {children}
-//     </button>
-//   );
-// };
 interface Props {
   disabled?: boolean;
 }

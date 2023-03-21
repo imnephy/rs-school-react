@@ -14,7 +14,6 @@ class Search extends React.Component<ISearch, { value: string }> {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     const storageSearchValue = localStorage.getItem('searchValue');
-    /* c8 ignore next */
     const inpValue = storageSearchValue ? storageSearchValue : '';
     this.state = {
       value: inpValue,
@@ -26,7 +25,6 @@ class Search extends React.Component<ISearch, { value: string }> {
     });
     this.props.onInputChange(e);
   }
-  /* c8 ignore next 3 */
   handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
   }
@@ -42,21 +40,5 @@ class Search extends React.Component<ISearch, { value: string }> {
     );
   }
 }
-
-// const Searcha = () => {
-//   const handleSubmit = (e: React.SyntheticEvent) => {
-//     e.preventDefault();
-//     console.log(e);
-//   };
-//   return (
-//     <div>
-//       <Logo className="search__img" />
-//       <form onSubmit={(e) => handleSubmit(e)}>
-//         <input type="text" placeholder="Search..." className="search__input" />
-//         <button>Search</button>
-//       </form>
-//     </div>
-//   );
-// };
 
 export default Search;
