@@ -1,3 +1,4 @@
+import React from 'react';
 import cl from './MyInput.module.scss';
 
 interface Props {
@@ -6,10 +7,12 @@ interface Props {
   onChange?: (e: React.SyntheticEvent) => void;
   type: string;
   required?: boolean;
+  ref?: React.RefObject<HTMLInputElement>;
+  role?: string;
 }
 
-const MyInput = (props: React.PropsWithChildren<Props>): JSX.Element => {
-  return <input className={cl.MyInput} {...props} />;
-};
+const MyInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
+  return <input className={cl.MyInput} ref={ref} {...props} />;
+});
 
 export default MyInput;

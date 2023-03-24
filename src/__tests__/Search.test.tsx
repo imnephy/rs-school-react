@@ -2,11 +2,13 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import Search from '../components/search/Search';
 
 describe('Search', () => {
-  beforeEach(() => render(<Search onInputChange={() => {}} />));
-
-  render(<Search onInputChange={() => {}} />);
-  const search = screen.getByPlaceholderText('Search...');
-  const searchBtn = screen.getByRole('button');
+  let search: HTMLInputElement;
+  let searchBtn: HTMLButtonElement;
+  beforeEach(() => {
+    render(<Search onInputChange={() => {}} />);
+    search = screen.getByPlaceholderText('Search...');
+    searchBtn = screen.getByRole('button');
+  });
 
   it('should render search elem', async () => {
     expect(search).toBeInTheDocument();

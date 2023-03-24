@@ -163,6 +163,11 @@ header nav a.active {
 
     & button {
       display: block;
+      &:active ~ span {
+        opacity: 1;
+        transition: all 0.5s ease;
+        background-color: white;
+      }
     }
     & select {
       background-color: rgba(255, 153, 238, 0.219);
@@ -186,14 +191,41 @@ header nav a.active {
         width: 50%;
       }
     }
+    & span {
+      transition: all 1s ease-in;
+      color: #bc4123;
+    }
   }
-  & .form-inputs__sex-swither {
+  & .form-inputs__gender-swither {
     display: flex;
     justify-content: center;
     width: 100%;
     gap: 20px;
     & input {
       margin-right: 12px;
+    }
+  }
+  & .file-upload {
+    & label {
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+      &:hover {
+        background-color: var(--primary);
+      }
+    }
+    & input[type='file'] {
+      display: none;
+    }
+    & .file-upload__image-container {
+      & img {
+        width: 250px;
+        height: 150px;
+        margin-top: 20px;
+      }
     }
   }
 }

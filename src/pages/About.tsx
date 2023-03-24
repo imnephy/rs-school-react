@@ -1,6 +1,6 @@
 import React from 'react';
 
-class AboutUs extends React.Component {
+class About extends React.Component {
   componentDidMount(): void {
     document.title = `About | Online-store`;
   }
@@ -28,4 +28,4 @@ class AboutUs extends React.Component {
   }
 }
 
-export default AboutUs;
+export default About;
