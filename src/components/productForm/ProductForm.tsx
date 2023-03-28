@@ -75,10 +75,7 @@ class ProductForm extends React.Component<
       invalidName = true;
     }
 
-    if (
-      !date ||
-      !date.match(/(20[0-1][0-9]|202[0-3])-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])/)
-    ) {
+    if (!date) {
       invalidDate = true;
     }
     if (!country || Number(country) === 1) {
