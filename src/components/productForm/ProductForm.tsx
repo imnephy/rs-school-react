@@ -47,9 +47,12 @@ const ProductForm = (props: IFormInputProps) => {
   };
   const resetForm = () => {
     setValidInputs({
-      ...validInputs,
-      imageUrl: null,
+      invalidName: false,
+      invalidDate: false,
+      invalidCountry: false,
+      invalidCheck: false,
       imageFile: defaultFile,
+      imageUrl: null,
     });
     (inputName.current as HTMLInputElement).value = '';
     (inputDate.current as HTMLInputElement).value = '';
