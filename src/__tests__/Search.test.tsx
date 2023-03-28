@@ -5,7 +5,7 @@ describe('Search', () => {
   let search: HTMLInputElement;
   let searchBtn: HTMLButtonElement;
   beforeEach(() => {
-    render(<Search onInputChange={() => {}} />);
+    render(<Search handleSearchBtn={() => {}} />);
     search = screen.getByPlaceholderText('Search...');
     searchBtn = screen.getByRole('button');
   });

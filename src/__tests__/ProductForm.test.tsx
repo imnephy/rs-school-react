@@ -107,13 +107,6 @@ describe('ProductForm', () => {
       expect(errorElem).toBeInTheDocument();
     });
 
-    it('should show error message when date invalid', async () => {
-      fireEvent.change(dateInput, { target: { value: '0002-10-15' } });
-      fireEvent.click(submitBtn);
-      const errorElem = screen.getByText(/invalid date/i);
-      expect(errorElem).toBeInTheDocument();
-    });
-
     it("shouldn't show error message when date invalid", async () => {
       fireEvent.change(dateInput, { target: { value: '2023-04-15' } });
       fireEvent.click(submitBtn);

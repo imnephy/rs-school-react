@@ -38,7 +38,6 @@ describe('Forms', () => {
     fireEvent.click(submitBtn);
     await fillAllFieldsValid(allFields);
     fireEvent.click(submitBtn);
-    screen.debug();
     const names = screen.getAllByText(/ivan/i);
     expect(names.length).toBe(2);
   });

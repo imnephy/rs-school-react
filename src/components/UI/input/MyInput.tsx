@@ -7,7 +7,7 @@ interface Props {
   onChange?: (e: React.SyntheticEvent) => void;
   type: string;
   required?: boolean;
-  ref?: React.RefObject<HTMLInputElement>;
+  ref?: React.Ref<HTMLInputElement>;
   role?: string;
 }
 

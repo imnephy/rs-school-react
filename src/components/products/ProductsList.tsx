@@ -7,7 +7,6 @@ interface IProductsList {
 
 const ProductsList = (props: React.PropsWithChildren<IProductsList>): JSX.Element => {
   const productsList = props.products;
-
   return (
     <div className="products__list">
       {productsList.map((product, index) => {

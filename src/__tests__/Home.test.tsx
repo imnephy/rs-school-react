@@ -16,6 +16,6 @@ describe('Home', () => {
     const searchInput = screen.getByPlaceholderText('Search...');
     fireEvent.change(searchInput, { target: { value: 'iphone 9' } });
     const items = screen.getAllByText(/details/i);
-    expect(items.length).toBe(1);
+    expect(items.length).toBe(3);
   });
 });

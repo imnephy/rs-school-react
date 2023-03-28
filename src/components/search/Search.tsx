@@ -1,49 +1,39 @@
 import './search.scss';
 import { ReactComponent as Logo } from '../../assets/search-glass.svg';
-import React from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import MyInput from '../UI/input/MyInput';
 import MyButton from '../UI/button/MyButton';
+import { FC } from 'react';
+import { SyntheticEvent } from 'react';
+
+type SearchBtn = { handleSearchBtn: (value: string) => void };
 
 export interface ISearch {
-  onInputChange: (e: React.SyntheticEvent) => void;
+  onSubmit: SearchBtn;
 }
 
-class Search extends React.Component<ISearch, { value: string }> {
-  constructor(props: ISearch) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    const storageSearchValue = localStorage.getItem('searchValue');
-    const inpValue = storageSearchValue ? storageSearchValue : '';
-    this.state = {
-      value: inpValue,
-    };
-  }
-  handleChange(e: React.SyntheticEvent) {
-    this.setState({
-      value: (e.target as HTMLInputElement).value,
-    });
-    this.props.onInputChange(e);
-  }
-  handleSubmit(e: React.SyntheticEvent) {
+const Search: FC<SearchBtn> = ({ handleSearchBtn }: SearchBtn) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const inputElem = inputRef.current as HTMLInputElement;
+    inputElem.value = localStorage.getItem('searchValue') || '';
+  }, []);
+  const handleSearchChange = (e: SyntheticEvent) => {
+    localStorage.setItem('searchValue', (e.target as HTMLInputElement).value);
+  };
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-  }
-  render(): React.ReactNode {
-    return (
-      <div className="search">
-        <Logo className="search__img" />
-        <form onSubmit={this.handleSubmit}>
-          <MyInput
-            type="text"
-            placeholder="Search..."
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-          <MyButton>Search</MyButton>
-        </form>
-      </div>
-    );
-  }
-}
+    handleSearchBtn(inputRef.current?.value as string);
+  };
+  return (
+    <div className="search">
+      <Logo className="search__img" />
+      <form onSubmit={onSubmit}>
+        <MyInput type="text" placeholder="Search..." onChange={handleSearchChange} ref={inputRef} />
+        <MyButton>Search</MyButton>
+      </form>
+    </div>
+  );
+};
 
 export default Search;
