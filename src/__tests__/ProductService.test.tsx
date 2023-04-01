@@ -1,8 +1,8 @@
-import ProductService from '../API/ProductService';
+import { getMangaSearch } from '@/API/ProductService';
 
 describe('Product service', () => {
   it('should return data', async () => {
-    const data = await ProductService.getAll();
-    expect(data.products.length).toBe(3);
+    const { data } = await getMangaSearch('');
+    expect(data.length).toBe(3);
   });
 });

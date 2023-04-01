@@ -11,7 +11,7 @@ describe('Root layout', () => {
     );
   });
   it('heading', async () => {
-    const heading = screen.getByText(/online-store/i);
+    const heading = screen.getByText(/manga-store/i);
     expect(heading).toBeInTheDocument();
   });
 });

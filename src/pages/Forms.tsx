@@ -1,6 +1,6 @@
-import ProductCard from '../components/productForm/ProductCard/ProductCard';
+import ProductCard from '@/components/productForm/ProductCard/ProductCard';
 import { useEffect, useState } from 'react';
-import ProductForm from '../components/productForm/ProductForm';
+import ProductForm from '@/components/productForm/ProductForm';
 
 export interface IProductCard {
   name: string;

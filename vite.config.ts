@@ -4,7 +4,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
-
+import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [svgr(), react()],
@@ -15,10 +15,18 @@ export default defineConfig({
     coverage: {
       all: true,
       reporter: ['text', 'json', 'html'],
-      lines: 40,
-      functions: 40,
-      branches: 40,
-      statements: 40,
+      lines: 70,
+      functions: 70,
+      branches: 70,
+      statements: 70,
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@ui': path.resolve(__dirname, './src/components/UI'),
+      '@pages': path.resolve(__dirname, './src/components/pages'),
     },
   },
 });

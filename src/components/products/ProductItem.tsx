@@ -1,31 +1,38 @@
-import MyButton from '../../components/UI/button/MyButton';
-import { Product } from '../../pages/Home';
+import MyButton from '../UI/button/MyButton';
+import { MangaSearchData } from '@/API/ProductService';
+import getStrFromArray, { getCorrectLength } from '@/utils/mangaDataHandler';
 
 interface IProduct {
-  product: Product;
+  product: MangaSearchData;
+  setModalActiveFunc: (pr: MangaSearchData) => void;
 }
 
 const ProductItem = (props: IProduct) => {
-  const product = props.product;
+  const {
+    authors,
+    title,
+    images: {
+      jpg: { image_url },
+    },
+    genres,
+  } = props.product;
+
+  const _title = getCorrectLength(title);
+  const genresStr = getStrFromArray(genres);
+  const authorsStr = getStrFromArray(authors);
+
   return (
-    <div
-      className="product__item"
-      key={product.id}
-      style={{ background: `url(${product.images[0]}) 0% 0% / cover` }}
-    >
+    <div className="product__item" style={{ background: `url(${image_url}) 0% 0% / cover` }}>
       <div className="product__item-info">
         <ul className="product__item-info__list">
-          <li>Category: {product.category}</li>
-          <li>Brand: {product.brand}</li>
-          <li>Price: ${product.price}</li>
-          <li>Discount: {product.discountPercentage}%</li>
-          <li>Rating: {product.rating}</li>
-          <li>Stock: {product.stock}</li>
+          <li>{_title}</li>
+          <li>{authors.length ? authorsStr : `no author`}</li>
+          <li>{genresStr}</li>
         </ul>
       </div>
       <div className="product__item-btns">
         <MyButton>Add To Cart</MyButton>
-        <MyButton>Details</MyButton>
+        <MyButton onClick={() => props.setModalActiveFunc(props.product)}>Details</MyButton>
       </div>
     </div>
   );

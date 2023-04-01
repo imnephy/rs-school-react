@@ -1,4 +1,4 @@
-import { IProductCard } from '../../../pages/Forms';
+import { IProductCard } from '@/pages/Forms';
 
 const ProductCard = (props: IProductCard) => {
   const { name, gender, image, date, country } = props;

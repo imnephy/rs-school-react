@@ -1,9 +1,9 @@
-import MyButton from '../UI/button/MyButton';
-import MyInput from '../UI/input/MyInput';
-import MyRadioButton from '../UI/radioButton/MyRadioButton';
-import defaultPic from '../../assets/default.png';
+import MyButton from '@components/UI/button/MyButton';
+import MyInput from '@components/UI/input/MyInput';
+import MyRadioButton from '@ui/radioButton/MyRadioButton';
+import defaultPic from '@/assets/default.png';
 import React, { useRef, useState } from 'react';
-import { IProductCard } from '../../pages/Forms';
+import { IProductCard } from '@/pages/Forms';
 
 interface IFormInputProps {
   onAddCard: (newCard: IProductCard) => void;
@@ -33,7 +33,7 @@ const ProductForm = (props: IFormInputProps) => {
     const name = inputName.current?.value as string;
     const date = inputDate.current?.value as string;
     const country = inputCountry.current?.value as string;
-    const gender = inputGenderMale.current?.checked ? 'male' : 'femail';
+    const gender = inputGenderMale.current?.checked ? 'male' : 'female';
 
     const image = validInputs.imageUrl ?? defaultURL;
 
@@ -125,7 +125,7 @@ const ProductForm = (props: IFormInputProps) => {
           </select>
           {invalidCountry && <span>Choose country</span>}
         </div>
-        <div className="form-inputs__gender-swither">
+        <div className="form-inputs__gender-switcher">
           <MyRadioButton
             name="gender"
             id="male-gender"
