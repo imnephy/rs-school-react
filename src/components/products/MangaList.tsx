@@ -1,5 +1,5 @@
 import { MangaSearchData } from '@/API/ProductService';
-import ModalMangaItem from '@/modal/ModalMangaItem';
+import ModalMangaItem from '@/components/modal/ModalMangaItem';
 import { useCallback, useState } from 'react';
 import ProductItem from './ProductItem';
 

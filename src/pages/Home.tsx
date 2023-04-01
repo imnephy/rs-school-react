@@ -6,20 +6,7 @@ import Loader from '@/components/UI/Loader/Loader';
 import useFetching from '@/hooks/useFetching';
 import MyButton from '@/components/UI/button/MyButton';
 import classNames from 'classnames';
-
-export interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
-  thumbnail: string;
-  images: string[];
-}
+import projectTitle from '@/utils/projectTitle';
 
 const Home = () => {
   const [currMangaList, setCurrMangaList] = useState<MangaSearchData[]>([]);
@@ -42,7 +29,7 @@ const Home = () => {
   });
 
   useEffect(() => {
-    document.title = `Home | Online-store`;
+    document.title = `Home | ${projectTitle}`;
     fetchManga(inputValue);
     return setCurrMangaList(() => []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
