@@ -4,12 +4,12 @@ import { IProductCard } from '../pages/Forms';
 import defaultPic from '../assets/default.png';
 
 const newCard: IProductCard = {
-  name: 'Ivan Ivanov',
+  firstName: 'Ivan Ivanovo',
   country: 'Russia',
   gender: 'male',
   image: defaultPic,
   date: '2023-04-25',
-  check: true,
+  checkPersonal: true,
 };
 
 describe('ProductCard', () => {
@@ -18,7 +18,7 @@ describe('ProductCard', () => {
   });
 
   it('should render Card', async () => {
-    const nameElem = screen.getByText(`Name: ${newCard.name}`);
+    const nameElem = screen.getByText(`Name: ${newCard.firstName}`);
     const countryElem = screen.getByText(`Country: ${newCard.country}`);
     const genderElem = screen.getByText(`Gender: ${newCard.gender}`);
     const dateElem = screen.getByText(`Date: ${newCard.date}`);

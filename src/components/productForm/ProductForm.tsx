@@ -1,9 +1,9 @@
 import MyButton from '../UI/button/MyButton';
-import MyInput from '../UI/input/MyInput';
-import MyRadioButton from '../UI/radioButton/MyRadioButton';
+import { Input } from '../UI/input/MyInput';
+import { Radio } from '../UI/radioButton/MyRadioButton';
 import defaultPic from '../../assets/default.png';
-import React, { useRef, useState } from 'react';
 import { IProductCard } from '../../pages/Forms';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface IFormInputProps {
   onAddCard: (newCard: IProductCard) => void;
@@ -11,109 +11,65 @@ interface IFormInputProps {
 const COUNTRIES = ['Russia', 'Ukraine', 'Belarus', 'Poland', 'China'];
 
 const ProductForm = (props: IFormInputProps) => {
-  const inputName: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const inputDate: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const inputCountry: React.MutableRefObject<HTMLSelectElement | null> = useRef(null);
-  const inputGenderMale: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const inputGenderFemale: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const inputFileRef: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const inputCheckbox: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const defaultFile = new File([defaultPic], 'default.png', { type: 'image/png' });
-  const defaultURL = defaultPic;
-  const [validInputs, setValidInputs] = useState({
-    invalidName: false,
-    invalidDate: false,
-    invalidCountry: false,
-    invalidCheck: false,
-    imageFile: defaultFile as File | null,
-    imageUrl: null as string | null,
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IProductCard>({
+    defaultValues: {
+      firstName: '',
+      country: '',
+      gender: '',
+      image: undefined,
+      date: undefined,
+      checkPersonal: false,
+    },
   });
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const name = inputName.current?.value as string;
-    const date = inputDate.current?.value as string;
-    const country = inputCountry.current?.value as string;
-    const gender = inputGenderMale.current?.checked ? 'male' : 'femail';
 
-    const image = validInputs.imageUrl ?? defaultURL;
-
-    const check = inputCheckbox.current?.checked as boolean;
-    const card: IProductCard = { name, date, country, gender, image, check };
-    if (checkValidation(card)) {
-      return;
-    }
-    props.onAddCard(card);
-    resetForm();
+  const onSubmit: SubmitHandler<IProductCard> = (data) => {
+    handleImageInput(data);
+    props.onAddCard(data);
+    reset();
   };
-  const resetForm = () => {
-    setValidInputs({
-      invalidName: false,
-      invalidDate: false,
-      invalidCountry: false,
-      invalidCheck: false,
-      imageFile: defaultFile,
-      imageUrl: null,
-    });
-    (inputName.current as HTMLInputElement).value = '';
-    (inputDate.current as HTMLInputElement).value = '';
-    (inputCountry.current as HTMLSelectElement).selectedIndex = 0;
-    (inputGenderMale.current as HTMLInputElement).checked = true;
-    (inputCheckbox.current as HTMLInputElement).checked = false;
-  };
-  const checkValidation = (card: IProductCard) => {
-    const { name, date, country, check } = card;
-    let invalidName = false;
-    let invalidDate = false;
-    let invalidCountry = false;
-    let invalidCheck = false;
-    if (!name || !name.match(/^[a-zA-Z]{4,}$/)) {
-      invalidName = true;
-    }
 
-    if (!date) {
-      invalidDate = true;
-    }
-    if (!country || Number(country) === 1) {
-      invalidCountry = true;
-    }
-    if (!check) {
-      invalidCheck = true;
-    }
-    setValidInputs({
-      ...validInputs,
-      invalidName,
-      invalidDate,
-      invalidCountry,
-      invalidCheck,
-    });
-
-    if (invalidName || invalidDate || invalidCountry || invalidCheck) {
-      return true;
-    }
-  };
-  const handleImageInput = () => {
-    const imageFile = inputFileRef.current?.files && inputFileRef.current.files[0];
+  // image input handler
+  const handleImageInput = (data: IProductCard) => {
+    const imageFile = data.image[0];
     if (imageFile !== undefined) {
-      setValidInputs({
-        ...validInputs,
-        imageUrl: URL.createObjectURL?.(imageFile as File),
-        imageFile,
-      });
+      const url = URL.createObjectURL?.(imageFile as File);
+      data.image = url;
+    } else {
+      data.image = defaultPic;
     }
   };
-  const { imageFile, imageUrl, invalidName, invalidDate, invalidCountry, invalidCheck } =
-    validInputs;
+
   return (
     <div className="form">
       <h2>Fill the form below</h2>
-      <form className="form-inputs" onSubmit={handleSubmit}>
-        <MyInput type="text" placeholder="Your Name" ref={inputName} />
-        {invalidName && <span>name length should be {'>'} 3, latin characters</span>}
+      <form className="form-inputs" onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          pattern={{ message: 'invalid input', value: /^[A-Z][a-z]*$/ }}
+          label="firstName"
+          register={register}
+          required={'Name is required'}
+          placeholder="Your Name"
+        />
+        {errors.firstName && <span>{errors.firstName?.message}</span>}
         <div className="form-inputs__short">
-          <MyInput role="date" type="date" ref={inputDate} />
-          {invalidDate && <span>invalid date</span>}
-          <select data-testid="country-select" defaultValue="1" ref={inputCountry}>
-            <option value="1" disabled>
+          <Input
+            label="date"
+            type="date"
+            register={register}
+            required={'Date is required'}
+            testId="date"
+          />
+          {errors.date && <span>{errors.date?.message}</span>}
+          <select
+            data-testid="country-select"
+            {...register('country', { required: 'Country is required' })}
+          >
+            <option value="" disabled>
               Country
             </option>
             {COUNTRIES.map((country, i) => (
@@ -123,47 +79,35 @@ const ProductForm = (props: IFormInputProps) => {
             ))}
             ;
           </select>
-          {invalidCountry && <span>Choose country</span>}
+          {errors.country && <span>{errors.country?.message}</span>}
         </div>
-        <div className="form-inputs__gender-swither">
-          <MyRadioButton
-            name="gender"
-            id="male-gender"
-            defaultChecked
-            text="male"
-            ref={inputGenderMale}
+        <div className="form-inputs__gender-switcher">
+          <Radio register={register} label="gender" value="male" />
+          <Radio register={register} label="gender" value="female" />
+        </div>
+        {errors.gender && <div style={{ color: '#bc4123' }}>{errors.gender?.message}</div>}
+        <input
+          data-testid="image-input"
+          type="file"
+          accept="image/jpeg,image/png,image/gif"
+          id="image-input"
+          {...register('image', { required: 'Image is required' })}
+        />
+        {errors.image && <span>{errors.image?.message}</span>}
+        <label htmlFor="checkPersonal" className="form-check">
+          <Input
+            register={register}
+            label="checkPersonal"
+            type="checkbox"
+            name="checkPersonal"
+            value="consent to my personal data"
+            required="This is required"
+            testId="checkPersonal"
           />
-          <MyRadioButton name="gender" id="female-gender" text="female" ref={inputGenderFemale} />
-        </div>
-        <div className="file-upload">
-          <label htmlFor="image-input">Choose image...</label>
-          {imageFile && (
-            <span style={{ marginLeft: '15px', color: 'white' }}>{imageFile.name}</span>
-          )}
-          <input
-            data-testid="image-input"
-            type="file"
-            accept="image/jpeg,image/png,image/gif"
-            id="image-input"
-            onInput={handleImageInput}
-            ref={inputFileRef}
-          />
-          <div className="file-upload__image-container">
-            {imageUrl && (
-              <img
-                id="upload-image"
-                src={URL.createObjectURL(imageFile as File)}
-                alt="Image Preview"
-              />
-            )}
-          </div>
-        </div>
-        <label htmlFor="checkPersonal">
-          <input type="checkbox" name="checkPersonal" id="checkPersonal" ref={inputCheckbox} />I
-          consent to my personal data
+          I consent to my personal data
         </label>
-        {invalidCheck && <span>You should check</span>}
-        <MyButton>Submit</MyButton>
+        {errors.checkPersonal && <span>{errors.checkPersonal?.message}</span>}
+        <MyButton type="submit">Submit</MyButton>
       </form>
     </div>
   );

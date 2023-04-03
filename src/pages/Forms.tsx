@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import ProductForm from '../components/productForm/ProductForm';
 
 export interface IProductCard {
-  name: string;
+  firstName: string;
   country: string;
   gender: string;
-  image: string;
+  image: FileList | string;
   date: string;
-  check: boolean;
+  checkPersonal: boolean;
 }
 
 const Forms = () => {

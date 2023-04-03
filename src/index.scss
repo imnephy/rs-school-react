@@ -196,7 +196,7 @@ header nav a.active {
       color: #bc4123;
     }
   }
-  & .form-inputs__gender-swither {
+  & .form-inputs__gender-switcher {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -227,5 +227,12 @@ header nav a.active {
         margin-top: 20px;
       }
     }
+  }
+}
+
+.form-check {
+  & input {
+    margin-right: 15px;
+    width: fit-content;
   }
 }

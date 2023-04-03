@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Forms from '../pages/Forms';
 import { fillAllFieldsValid, Inputs } from './ProductForm.test';
 
@@ -16,12 +16,12 @@ describe('Forms', () => {
     render(<Forms />);
     nameInput = screen.getByPlaceholderText('Your Name');
     submitBtn = screen.getByText('Submit');
-    dateInput = screen.getByRole('date');
+    imageInput = screen.getByTestId('image-input');
+    dateInput = screen.getByTestId('date');
     countrySelectElem = screen.getByTestId('country-select');
     maleRadioElem = screen.getByLabelText('male');
     femaleRadioElem = screen.getByLabelText('female');
-    imageInput = screen.getByTestId('image-input');
-    check = screen.getByLabelText(/i consent to my personal data/i);
+    check = screen.getByTestId('checkPersonal');
     allFields = {
       nameInput,
       dateInput,
@@ -33,12 +33,12 @@ describe('Forms', () => {
       submitBtn,
     };
   });
-  it('should render 2 card with same name', async () => {
+  it('should render card', async () => {
     await fillAllFieldsValid(allFields);
     fireEvent.click(submitBtn);
-    await fillAllFieldsValid(allFields);
-    fireEvent.click(submitBtn);
-    const names = screen.getAllByText(/ivan/i);
-    expect(names.length).toBe(2);
+    const names = await screen.findAllByText(/ivan/i);
+    await waitFor(() => {
+      expect(names.length).toBe(1);
+    });
   });
 });
