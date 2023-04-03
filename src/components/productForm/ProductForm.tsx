@@ -86,13 +86,16 @@ const ProductForm = (props: IFormInputProps) => {
           <Radio register={register} label="gender" value="female" />
         </div>
         {errors.gender && <div style={{ color: '#bc4123' }}>{errors.gender?.message}</div>}
-        <input
-          data-testid="image-input"
-          type="file"
-          accept="image/jpeg,image/png,image/gif"
-          id="image-input"
-          {...register('image', { required: 'Image is required' })}
-        />
+        <div className="file-upload">
+          <label htmlFor="image-input">Choose Image...</label>
+          <input
+            data-testid="image-input"
+            type="file"
+            accept="image/jpeg,image/png,image/gif"
+            id="image-input"
+            {...register('image', { required: 'Image is required' })}
+          />
+        </div>
         {errors.image && <span>{errors.image?.message}</span>}
         <label htmlFor="checkPersonal" className="form-check">
           <Input
