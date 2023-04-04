@@ -28,12 +28,12 @@ const ProductForm = (props: IFormInputProps) => {
   });
 
   const onSubmit: SubmitHandler<IProductCard> = (data) => {
-    const message = confirm('Are you want to create new Card?');
-    if (message) {
-      handleImageInput(data);
-      props.onAddCard(data);
-      reset();
-    }
+    // const message = confirm('Are you want to create new Card?');
+    // if (message) {
+    handleImageInput(data);
+    props.onAddCard(data);
+    reset();
+    // }
   };
 
   // image input handler
