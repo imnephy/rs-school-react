@@ -4,13 +4,13 @@ import MyRadioButton from '@ui/radioButton/MyRadioButton';
 import defaultPic from '@/assets/default.png';
 import React, { useRef, useState } from 'react';
 import { IProductCard } from '@/pages/Forms';
+import { useAppDispatch } from '@/hooks/redux';
+import { setFormCardsValue } from '@/features/form/formCardSlice';
 
-interface IFormInputProps {
-  onAddCard: (newCard: IProductCard) => void;
-}
 const COUNTRIES = ['Russia', 'Ukraine', 'Belarus', 'Poland', 'China'];
 
-const ProductForm = (props: IFormInputProps) => {
+const ProductForm = () => {
+  const dispatch = useAppDispatch();
   const inputName: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
   const inputDate: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
   const inputCountry: React.MutableRefObject<HTMLSelectElement | null> = useRef(null);
@@ -28,6 +28,11 @@ const ProductForm = (props: IFormInputProps) => {
     imageFile: defaultFile as File | null,
     imageUrl: null as string | null,
   });
+
+  const onAddCard = (newProduct: IProductCard) => {
+    dispatch(setFormCardsValue(newProduct));
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const name = inputName.current?.value as string;
@@ -42,7 +47,7 @@ const ProductForm = (props: IFormInputProps) => {
     if (checkValidation(card)) {
       return;
     }
-    props.onAddCard(card);
+    onAddCard(card);
     resetForm();
   };
   const resetForm = () => {

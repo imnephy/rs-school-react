@@ -1,7 +1,9 @@
 import ProductCard from '@/components/productForm/ProductCard/ProductCard';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ProductForm from '@/components/productForm/ProductForm';
 import projectTitle from '@/utils/projectTitle';
+import { selectFormCards } from '@/features/form/formCardSlice';
+import { useAppSelector } from '@/hooks/redux';
 
 export interface IProductCard {
   name: string;
@@ -13,19 +15,17 @@ export interface IProductCard {
 }
 
 const Forms = () => {
-  const [products, setProducts] = useState<IProductCard[]>([]);
+  const formCards = useAppSelector(selectFormCards) as IProductCard[];
   useEffect(() => {
     document.title = `Forms | ${projectTitle}`;
   }, []);
-  const onAddCard = (newProduct: IProductCard) => {
-    setProducts([...products, newProduct]);
-  };
+
   return (
     <div className="wrapper">
-      <ProductForm onAddCard={onAddCard} />
+      <ProductForm />
       <h2>Users:</h2>
       <div className="products__list">
-        {products.map((product, i) => {
+        {formCards.map((product, i) => {
           return <ProductCard key={i} {...product} />;
         })}
       </div>
