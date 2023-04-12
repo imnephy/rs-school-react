@@ -13,7 +13,10 @@ const Home = () => {
   const [notFound, setNotFound] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [inputValue, setInputValue] = useState('');
+
+  const val = localStorage.getItem('searchValue') || '';
+
+  const [inputValue, setInputValue] = useState(val);
   const [fetchManga, isLoading, mangaError] = useFetching(async (value: string) => {
     setNotFound(false);
     const res = await getMangaSearch(value, page);
