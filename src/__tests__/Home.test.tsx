@@ -1,13 +1,15 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import 'whatwg-fetch';
+import { screen, waitFor } from '@testing-library/react';
 import Home from '../pages/Home';
+import { renderWithProviders } from '@/utils/test-utils';
 
 describe('Home', () => {
   beforeEach(() => {
-    render(<Home />);
+    renderWithProviders(<Home />);
   });
   it('should render 3 products on initialization', async () => {
     await waitFor(() => expect(screen.findAllByTestId(/test-/i)));
-    const items = screen.getAllByText(/details/i);
-    expect(items.length).toBe(3);
+    const items = await screen.findAllByText(/details/i);
+    expect(items.length).toBe(20);
   });
 });

@@ -1,6 +1,7 @@
 const getStrFromArray = (arr: { name: string }[]) => {
-  arr.length = arr.length > 3 ? 3 : arr.length;
-  return arr.map((elem) => elem.name).join(', ');
+  const arrCopy = [...arr];
+  arrCopy.length = arr.length > 3 ? 3 : arr.length;
+  return arrCopy.map((elem) => elem.name).join(', ');
 };
 
 export default getStrFromArray;

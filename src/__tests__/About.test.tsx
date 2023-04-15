@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import { render, screen } from '@testing-library/react';
 import About from '../pages/About';
 

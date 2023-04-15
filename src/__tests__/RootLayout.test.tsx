@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import RootLayout from '../layouts/RootLayout';

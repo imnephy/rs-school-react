@@ -1,77 +1,87 @@
-import { getMangaSearch, MangaSearchData } from '@/API/ProductService';
 import Search from '@/components/search/Search';
-import MangaList from '@/components/products/MangaList';
 import { useEffect, useState } from 'react';
 import Loader from '@/components/UI/Loader/Loader';
-import useFetching from '@/hooks/useFetching';
 import MyButton from '@/components/UI/button/MyButton';
 import classNames from 'classnames';
 import projectTitle from '@/utils/projectTitle';
+import { useListMangaQuery } from '@/app/services/manga';
+import { selectPage, selectSearch, setSearchPage } from '@/features/search/searchSlice';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import MangaList from '@/components/products/MangaList';
+import { AppDispatch } from '@/app/store';
 
 const Home = () => {
-  const [currMangaList, setCurrMangaList] = useState<MangaSearchData[]>([]);
-  const [notFound, setNotFound] = useState(false);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [inputValue, setInputValue] = useState('');
-  const [fetchManga, isLoading, mangaError] = useFetching(async (value: string) => {
-    setNotFound(false);
-    const res = await getMangaSearch(value, page);
-    console.log(res);
-    setTotalPages(() => res.pagination.last_visible_page);
-    if (res.data.length) {
-      const mangaList: MangaSearchData[] = res.data;
-      setNotFound(false);
-      setCurrMangaList(() => mangaList);
-    } else {
-      setNotFound(true);
-    }
-  });
+  const searchPage = useAppSelector(selectPage);
+  const dispatch: AppDispatch = useAppDispatch();
+
+  const searchValue = useAppSelector(selectSearch);
+  const [inputValue, setInputValue] = useState(searchValue);
+  const { data: manga, isLoading } = useListMangaQuery({ query: inputValue, page: searchPage });
+
+  const totalPages = manga?.pagination.last_visible_page ?? 1;
 
   useEffect(() => {
     document.title = `Home | ${projectTitle}`;
-    fetchManga(inputValue);
-    return setCurrMangaList(() => []);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, inputValue]);
+  }, []);
 
   const handleSearchBtn = async (value: string) => {
     setInputValue(() => value);
-    setPage(() => 1);
+    dispatch(setSearchPage(1));
   };
 
   const handlePageBtn = async (e: React.SyntheticEvent, isLeft: boolean) => {
     switch (isLeft) {
       case true:
-        if (page === 1) {
-          setPage(() => totalPages);
+        if (searchPage === 1) {
+          dispatch(setSearchPage(totalPages));
         } else {
-          setPage((page) => page - 1);
+          dispatch(setSearchPage(searchPage - 1));
         }
         break;
       default:
-        if (page === totalPages) {
-          setPage(1);
+        if (searchPage === totalPages) {
+          dispatch(setSearchPage(1));
         } else {
-          setPage((page) => page + 1);
+          dispatch(setSearchPage(searchPage + 1));
         }
         break;
     }
   };
+  if (isLoading) {
+    return (
+      <div className="wrapper">
+        <div className="center-info" style={{ marginTop: '150px' }}>
+          <Loader />
+        </div>
+      </div>
+    );
+  }
+  if (!manga?.data) {
+    return <div className="wrapper">Server error.</div>;
+  }
 
   return (
     <div className="wrapper">
       <Search handleSearchBtn={handleSearchBtn} />
       <h2>Manga</h2>
-      <MangaList mangaList={currMangaList}></MangaList>
       <div className="center-info">{isLoading && <Loader />}</div>
-      <div className="center-info">{notFound && 'Manga not found.'}</div>
-      <div className="center-info">{mangaError && `Server error: ${mangaError}`}</div>
-      {totalPages !== 0 && !isLoading && !notFound && totalPages !== 1 && (
+      <div className="center-info">{manga.data.length === 0 && 'Manga not found.'}</div>
+      <MangaList mangaList={manga.data}></MangaList>
+      {totalPages !== 0 && !isLoading && totalPages !== 1 && (
         <div className={classNames('center-info', 'pagination')}>
-          <MyButton onClick={(e: React.SyntheticEvent) => handlePageBtn(e, true)}>{'<'}</MyButton>
-          <span>{`${page} / ${totalPages}`}</span>
-          <MyButton onClick={(e: React.SyntheticEvent) => handlePageBtn(e, false)}>{'>'}</MyButton>
+          <MyButton
+            data-testid="prev-page-button"
+            onClick={(e: React.SyntheticEvent) => handlePageBtn(e, true)}
+          >
+            {'<'}
+          </MyButton>
+          <span>{`${searchPage} / ${totalPages}`}</span>
+          <MyButton
+            data-testid="next-page-button"
+            onClick={(e: React.SyntheticEvent) => handlePageBtn(e, false)}
+          >
+            {'>'}
+          </MyButton>
         </div>
       )}
     </div>

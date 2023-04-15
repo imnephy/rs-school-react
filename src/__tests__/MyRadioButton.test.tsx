@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import { render, screen } from '@testing-library/react';
 import RadioButton from '../components/UI/radioButton/MyRadioButton';
 

@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import MangaList from '@/components/products/MangaList';
 import { mockMangaData } from '@/mocks/mockMangaData';
 import { fireEvent, render, screen } from '@testing-library/react';
@@ -5,7 +6,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 describe('MangaList', () => {
   let details: HTMLButtonElement;
   beforeEach(() => {
-    render(<MangaList mangaList={[mockMangaData.data[0]]} />);
+    render(<MangaList mangaList={[mockMangaData[0].data[0]]} />);
     details = screen.getByText(/details/i);
   });
 
@@ -15,7 +16,7 @@ describe('MangaList', () => {
 
   it('should show modal after click on details btn', async () => {
     fireEvent.click(details);
-    const scoreElem = screen.getByText(/9.14/i);
+    const scoreElem = await screen.findByText(/kenzou tenma/i);
     expect(scoreElem).toBeInTheDocument();
   });
 });

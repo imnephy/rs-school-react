@@ -2,12 +2,12 @@ import MyButton from '../UI/button/MyButton';
 import { MangaSearchData } from '@/API/ProductService';
 import getStrFromArray, { getCorrectLength } from '@/utils/mangaDataHandler';
 
-interface IProduct {
+interface IProductItem {
   product: MangaSearchData;
   setModalActiveFunc: (pr: MangaSearchData) => void;
 }
 
-const ProductItem = (props: IProduct) => {
+const ProductItem = (props: IProductItem) => {
   const {
     authors,
     title,

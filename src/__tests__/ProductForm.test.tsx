@@ -1,7 +1,9 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import 'whatwg-fetch';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { IProductCard } from '../pages/Forms';
 import ProductForm from '../components/productForm/ProductForm';
 import userEvent from '@testing-library/user-event';
+import { renderWithProviders } from '@/utils/test-utils';
 
 export interface Inputs {
   nameInput: HTMLInputElement;
@@ -13,8 +15,28 @@ export interface Inputs {
   imageInput: HTMLInputElement;
   check: HTMLInputElement;
 }
-
-export const fillAllFieldsValid = async (allFields: Inputs): Promise<IProductCard> => {
+export const getAllFields = (): Inputs => {
+  const nameInput = screen.getByPlaceholderText('Your Name') as HTMLInputElement;
+  const submitBtn = screen.getByText('Submit') as HTMLInputElement;
+  const dateInput = screen.getByRole('date') as HTMLInputElement;
+  const countrySelectElem = screen.getByTestId('country-select') as HTMLSelectElement;
+  const maleRadioElem = screen.getByLabelText('male') as HTMLInputElement;
+  const femaleRadioElem = screen.getByLabelText('female') as HTMLInputElement;
+  const imageInput = screen.getByTestId('image-input') as HTMLInputElement;
+  const check = screen.getByLabelText(/i consent to my personal data/i) as HTMLInputElement;
+  return {
+    nameInput,
+    dateInput,
+    countrySelectElem,
+    maleRadioElem,
+    femaleRadioElem,
+    imageInput,
+    check,
+    submitBtn,
+  };
+};
+export const fillAllFieldsValid = async (): Promise<IProductCard> => {
+  const allFields = getAllFields();
   fireEvent.change(allFields.nameInput, { target: { value: 'Ivan' } });
   fireEvent.change(allFields.dateInput, { target: { value: '2023-04-15' } });
   fireEvent.change(allFields.countrySelectElem, { target: { value: 'Russia' } });
@@ -26,13 +48,11 @@ export const fillAllFieldsValid = async (allFields: Inputs): Promise<IProductCar
     name: 'Ivan',
     date: '2023-04-15',
     country: 'Russia',
-    gender: 'femail',
+    gender: 'female',
     image: 'hello.png',
     check: true,
   };
 };
-
-const onAddCardIntoList = (): void => {};
 
 describe('ProductForm', () => {
   let nameInput: HTMLInputElement;
@@ -43,9 +63,8 @@ describe('ProductForm', () => {
   let femaleRadioElem: HTMLInputElement;
   let imageInput: HTMLInputElement;
   let check: HTMLInputElement;
-  let allFields: Inputs;
   beforeEach(() => {
-    render(<ProductForm onAddCard={onAddCardIntoList} />);
+    renderWithProviders(<ProductForm />);
     nameInput = screen.getByPlaceholderText('Your Name');
     submitBtn = screen.getByText('Submit');
     dateInput = screen.getByRole('date');
@@ -54,16 +73,6 @@ describe('ProductForm', () => {
     femaleRadioElem = screen.getByLabelText('female');
     imageInput = screen.getByTestId('image-input');
     check = screen.getByLabelText(/i consent to my personal data/i);
-    allFields = {
-      nameInput,
-      dateInput,
-      countrySelectElem,
-      maleRadioElem,
-      femaleRadioElem,
-      imageInput,
-      check,
-      submitBtn,
-    };
   });
 
   it('should render heading in form element', async () => {
@@ -95,13 +104,13 @@ describe('ProductForm', () => {
   });
 
   describe('date input', () => {
-    it('should show error message when date was not choosen', async () => {
+    it('should show error message when date was not chosen', async () => {
       fireEvent.click(submitBtn);
       const errorElem = screen.getByText(/invalid date/i);
       expect(errorElem).toBeInTheDocument();
     });
 
-    it('should show error message when date was not choosen', async () => {
+    it('should show error message when date was not chosen', async () => {
       fireEvent.click(submitBtn);
       const errorElem = screen.getByText(/invalid date/i);
       expect(errorElem).toBeInTheDocument();
@@ -115,14 +124,14 @@ describe('ProductForm', () => {
     });
   });
   describe('country input', () => {
-    it("shouldn't show error message when country was choosen", async () => {
+    it("shouldn't show error message when country was chosen", async () => {
       fireEvent.change(countrySelectElem, { target: { value: 'Russia' } });
       fireEvent.click(submitBtn);
       const errorElem = screen.queryByText(/choose country/i);
       expect(errorElem).toBe(null);
     });
 
-    it("should show error message when country wasn't choosen", async () => {
+    it("should show error message when country wasn't chosen", async () => {
       fireEvent.click(submitBtn);
       const errorElem = screen.getByText(/choose country/i);
       expect(errorElem).toBeInTheDocument();
@@ -135,7 +144,7 @@ describe('ProductForm', () => {
       expect(femaleRadioElem.checked).toBeFalsy();
     });
 
-    it("after click on femail, male shouldn't be checked", async () => {
+    it("after click on female, male shouldn't be checked", async () => {
       fireEvent.click(femaleRadioElem);
       expect(femaleRadioElem.checked).toBeTruthy();
       expect(maleRadioElem.checked).toBeFalsy();
@@ -163,7 +172,7 @@ describe('ProductForm', () => {
   });
 
   it('should clear form if all fields valid', async () => {
-    const values: IProductCard = await fillAllFieldsValid(allFields);
+    const values: IProductCard = await fillAllFieldsValid();
     fireEvent.click(submitBtn);
     expect(nameInput.value).not.toBe(values.name);
     expect(dateInput.value).not.toBe(values.date);

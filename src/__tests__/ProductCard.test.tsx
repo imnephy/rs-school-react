@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import { render, screen } from '@testing-library/react';
 import ProductCard from '../components/productForm/ProductCard/ProductCard';
 import { IProductCard } from '../pages/Forms';

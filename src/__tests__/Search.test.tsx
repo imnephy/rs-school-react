@@ -1,11 +1,13 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import 'whatwg-fetch';
+import { fireEvent, screen } from '@testing-library/react';
 import Search from '../components/search/Search';
+import { renderWithProviders } from '@/utils/test-utils';
 
 describe('Search', () => {
   let search: HTMLInputElement;
   let searchBtn: HTMLButtonElement;
   beforeEach(() => {
-    render(<Search handleSearchBtn={() => {}} />);
+    renderWithProviders(<Search handleSearchBtn={() => {}} />);
     search = screen.getByPlaceholderText('Search...');
     searchBtn = screen.getByRole('button');
   });
