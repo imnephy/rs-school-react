@@ -18,7 +18,9 @@ const ProductForm = () => {
   const inputGenderFemale: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
   const inputFileRef: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
   const inputCheckbox: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
-  const defaultFile = new File([defaultPic], 'default.png', { type: 'image/png' });
+  const defaultFile = import.meta.env.SSR
+    ? null
+    : new File([defaultPic], 'default.png', { type: 'image/png' });
   const defaultURL = defaultPic;
   const [validInputs, setValidInputs] = useState({
     invalidName: false,

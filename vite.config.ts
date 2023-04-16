@@ -29,4 +29,12 @@ export default defineConfig({
       '@pages': path.resolve(__dirname, './src/components/pages'),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        'entry-client': path.resolve(__dirname, 'src/entry-client.tsx'),
+      },
+    },
+  },
 });
