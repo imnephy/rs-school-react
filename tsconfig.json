@@ -3,6 +3,7 @@
     "target": "esnext",
     "lib": ["dom", "esnext", "dom.iterable"],
     "jsx": "react-jsx",
+    "types": ["cypress", "node", "jest"],
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -20,5 +21,9 @@
       "@ui/*": ["components/UI/*"]
     }
   },
-  "include": ["./src/**/*", "styled.d.ts", "custom.d.ts"]
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": ["./src/**/*", "styled.d.ts", "custom.d.ts", "**/*.ts"]
 }

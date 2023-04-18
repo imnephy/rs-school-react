@@ -5,15 +5,22 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import path from 'path';
+import istanbul from 'vite-plugin-istanbul';
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svgr(), react()],
+  plugins: [
+    svgr(),
+    react(),
+    istanbul({
+      cypress: true,
+      requireEnv: false,
+    }),
+  ],
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/setup.ts'],
     coverage: {
-      all: true,
       reporter: ['text', 'json', 'html'],
       lines: 80,
       functions: 80,
