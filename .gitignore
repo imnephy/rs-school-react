@@ -105,3 +105,12 @@ dist
 
 # Local Netlify folder
 .netlify
+
+
+# cypress
+instrumented
+.cypress_cache/
+.cypress-results/
+.cypress-debug/
+.cypress/videos/
+.cypress/screenshots/
