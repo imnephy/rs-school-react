@@ -37,6 +37,7 @@ export default defineConfig({
     },
   },
   build: {
+    sourcemap: 'hidden',
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
