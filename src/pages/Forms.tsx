@@ -1,9 +1,12 @@
-import ProductCard from '@/components/productForm/ProductCard/ProductCard';
 import { useEffect } from 'react';
-import ProductForm from '@/components/productForm/ProductForm';
-import projectTitle from '@/utils/projectTitle';
-import { selectFormCards } from '@/features/form/formCardSlice';
+
 import { useAppSelector } from '@/hooks/redux';
+import { selectFormCards } from '@/features/form/formCardSlice';
+
+import ProductForm from '@/components/productForm/ProductForm';
+import ProductFormCard from '@/components/productForm/ProductFormCard';
+
+import { PROJECT_TITLE } from '@/utils/variables';
 
 export interface IProductCard {
   name: string;
@@ -16,8 +19,9 @@ export interface IProductCard {
 
 const Forms = () => {
   const formCards = useAppSelector(selectFormCards) as IProductCard[];
+
   useEffect(() => {
-    document.title = `Forms | ${projectTitle}`;
+    document.title = `Forms | ${PROJECT_TITLE}`;
   }, []);
 
   return (
@@ -26,7 +30,7 @@ const Forms = () => {
       <h2>Users:</h2>
       <div className="products__list">
         {formCards.map((product, i) => {
-          return <ProductCard key={i} {...product} />;
+          return <ProductFormCard key={i} {...product} />;
         })}
       </div>
     </div>

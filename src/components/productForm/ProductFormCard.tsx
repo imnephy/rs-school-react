@@ -1,7 +1,8 @@
 import { IProductCard } from '@/pages/Forms';
 
-const ProductCard = (props: IProductCard) => {
+const ProductFormCard = (props: IProductCard) => {
   const { name, gender, image, date, country } = props;
+
   return (
     <div className="product__item" style={{ background: `url(${image}) 0% 0% / cover` }}>
       <div className="product__item-info">
@@ -16,4 +17,4 @@ const ProductCard = (props: IProductCard) => {
   );
 };
 
-export default ProductCard;
+export default ProductFormCard;

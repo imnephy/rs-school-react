@@ -1,10 +1,12 @@
-import projectTitle from '@/utils/projectTitle';
 import { useEffect } from 'react';
+
+import { PROJECT_TITLE } from '@/utils/variables';
 
 const About = () => {
   useEffect(() => {
-    document.title = `About | ${projectTitle}`;
+    document.title = `About | ${PROJECT_TITLE}`;
   }, []);
+
   return (
     <div className="wrapper">
       <div className="about">

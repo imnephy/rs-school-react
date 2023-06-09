@@ -1,12 +1,14 @@
-import { Provider } from 'react-redux';
-import { RenderOptions, render } from '@testing-library/react';
-import { IStoreState, RootState } from '@/app/store';
-import { PreloadedState, Store, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { PropsWithChildren } from 'react';
-import { api } from '@/app/services/manga';
+import { Provider } from 'react-redux';
+import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { PreloadedState, Store, combineReducers, configureStore } from '@reduxjs/toolkit';
+import { RenderOptions, render } from '@testing-library/react';
+
+import { IStoreState, RootState } from '@/app/store';
 import searchReducer from '../features/search/searchSlice';
 import formCardReducer from '@/features/form/formCardSlice';
-import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+
+import { api } from '@/app/services/manga';
 
 function renderWithRedux(ui: React.ReactElement, store: Store<IStoreState>) {
   return render(<Provider store={store}>{ui}</Provider>);

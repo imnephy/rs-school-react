@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
-import { MangaSearchResult } from '@/API/ProductService';
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { MangaSearchResult } from '@/API/ProductService';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.jikan.moe/v4/manga' }),

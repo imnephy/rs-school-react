@@ -1,11 +1,13 @@
-import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import projectTitle from '@/utils/projectTitle';
+import { Link } from 'react-router-dom';
+
+import { PROJECT_TITLE } from '@/utils/variables';
 
 const NotFound = () => {
   useEffect(() => {
-    document.title = `404 | ${projectTitle}`;
+    document.title = `404 | ${PROJECT_TITLE}`;
   }, []);
+
   return (
     <div className="wrapper">
       <div className="not-found">

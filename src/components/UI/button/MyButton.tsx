@@ -1,13 +1,14 @@
+import { FC, PropsWithChildren } from 'react';
 import cl from './MyButton.module.scss';
 
-interface Props {
+interface MyButtonProps {
   disabled?: boolean;
   onClick?: () => void;
 }
-const MyButton = <T,>(props: React.PropsWithChildren<T | Props>): JSX.Element => {
+const MyButton: FC<PropsWithChildren<MyButtonProps>> = ({ disabled, onClick, children }) => {
   return (
-    <button {...props} className={cl.MyBtn}>
-      {props.children}
+    <button onClick={onClick} disabled={disabled} className={cl.MyBtn}>
+      {children}
     </button>
   );
 };

@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import { render, screen } from '@testing-library/react';
-import ProductCard from '../components/productForm/ProductCard/ProductCard';
+import ProductFormCard from '../components/productForm/ProductFormCard';
 import { IProductCard } from '../pages/Forms';
 import defaultPic from '../assets/default.png';
 
@@ -15,7 +15,7 @@ const newCard: IProductCard = {
 
 describe('ProductCard', () => {
   beforeEach(() => {
-    render(<ProductCard {...newCard} />);
+    render(<ProductFormCard {...newCard} />);
   });
 
   it('should render Card', async () => {

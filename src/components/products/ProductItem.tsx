@@ -1,13 +1,16 @@
-import MyButton from '../UI/button/MyButton';
+import { FC } from 'react';
+
 import { MangaSearchData } from '@/API/ProductService';
 import getStrFromArray, { getCorrectLength } from '@/utils/mangaDataHandler';
 
-interface IProductItem {
+import MyButton from '../UI/button/MyButton';
+
+interface ProductItemProps {
   product: MangaSearchData;
   setModalActiveFunc: (pr: MangaSearchData) => void;
 }
 
-const ProductItem = (props: IProductItem) => {
+const ProductItem: FC<ProductItemProps> = ({ product, setModalActiveFunc }) => {
   const {
     authors,
     title,
@@ -15,7 +18,7 @@ const ProductItem = (props: IProductItem) => {
       jpg: { image_url },
     },
     genres,
-  } = props.product;
+  } = product;
 
   const _title = getCorrectLength(title);
   const genresStr = getStrFromArray(genres);
@@ -32,7 +35,7 @@ const ProductItem = (props: IProductItem) => {
       </div>
       <div className="product__item-btns">
         <MyButton>Add To Cart</MyButton>
-        <MyButton onClick={() => props.setModalActiveFunc(props.product)}>Details</MyButton>
+        <MyButton onClick={() => setModalActiveFunc(product)}>Details</MyButton>
       </div>
     </div>
   );

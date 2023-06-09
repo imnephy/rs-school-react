@@ -1,12 +1,14 @@
-import store from './app/store';
-import { Provider } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+import store from './app/store';
+
 import { ReactComponent as GitHub } from '@/assets/github.svg';
 import NotFound from './pages/NotFound';
+
 type PageModule = { default: React.ComponentType };
 type Pages = Record<string, PageModule>;
-import './index.scss';
 // Auto generates routes from files under ./pages
 // https://vitejs.dev/guide/features.html#glob-import
 const pages: Pages = import.meta.glob('./pages/*.tsx', { eager: true });
